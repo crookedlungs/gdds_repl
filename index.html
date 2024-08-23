@@ -10,11 +10,8 @@
   </head>
 
   <body>
-    <py-config> packages = ['colorama'] </py-config>
+    <py-config> packages = [] </py-config>
 
-    <script type="py" terminal worker>
-      name = input("What is your name? ")
-      print(f"Hello, {name}")
-    </script>
+    <script type="py" src="/worker.py" terminal worker></script>
   </body>
 </html>
