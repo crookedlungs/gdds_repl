@@ -10,13 +10,12 @@
   </head>
 
   <body>
-    <py-config type="toml"> packages = [] </py-config>
+    <py-config> packages = ['colorama'] </py-config>
+    <py-editor></py-editor>
 
-    <script
-      src="https://cdn.statically.io/gh/crookedlungs/gdds_repl/main/main.py"
-      worker
-      terminal
-      type="py"
-    ></script>
+    <script type="py" worker>
+      import code
+      code.interact()
+    </script>
   </body>
 </html>
