@@ -1,41 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script src="./mini-coi.js"></script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Python Runner with PyScript</title>
     <link rel="stylesheet" href="https://pyscript.net/latest/pyscript.css" />
     <script defer src="https://pyscript.net/latest/pyscript.js"></script>
-    <script
-      defer
-      src="https://raw.githubusercontent.com/WebReflection/mini-coi/main/mini-coi.js"
-    ></script>
   </head>
 
   <body>
-    <script
-      type="py"
-      src="./main.py"
-      config="./pyscript.toml"
-      terminal
-      worker
-    ></script>
+    <py-config type="toml"> packages = [] </py-config>
 
-    <!--     <script type="py" target="my-h1">
-      from pyscript import display
-      display("PyScript", append=False)
-    </script>
-    <h1 id="my-h1"></h1>
-    <py-repl></py-repl> 
-    <script>
-      document
-        .getElementById("run-button")
-        .addEventListener("click", function () {
-          let code = document.getElementById("python-code").value;
-          let pyscriptElement = document.getElementById("pyscript");
-          pyscriptElement.innerHTML = code;
-          pyscriptElement.run();
-        });
-    </script>-->
+    <script
+      src="https://cdn.statically.io/gh/crookedlungs/gdds_repl/main/main.py"
+      worker
+      terminal
+      type="py"
+    ></script>
   </body>
 </html>
