@@ -1,54 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script src="/mini-coi.js" scope="./"></script>
-
-    <title>GDDS REPL</title>
-
-    <!-- Recommended meta tags -->
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-
-    <!-- PyScript CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CodeMirror Example</title>
+    <!-- Include CodeMirror CSS -->
     <link
       rel="stylesheet"
-      href="https://pyscript.net/releases/2024.8.1/core.css"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css"
     />
-
-    <!-- This script tag bootstraps PyScript -->
-    <script
-      type="module"
-      src="https://pyscript.net/releases/2024.8.1/core.js"
-    ></script>
+    <!-- Include CodeMirror JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js"></script>
+    <!-- Optionally include modes for specific languages -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/mode/python/python.min.js"></script>
   </head>
-  <body>
-    <div style="display: flex; flex-direction: row">
-      <div style="display: flex; flex-direction: column; width: 50%">
-        <script id="editor" type="mpy-editor"></script>
-        <button onclick="runCode()">Run</button>
-      </div>
-      <div style="width: 50%">
-        <button onclick="clearTerminal()">Clear</button>
-        <script
-          id="console"
-          type="mpy"
-          src="./main.py"
-          terminal
-          worker
-        ></script>
-      </div>
-    </div>
-    <script>
-      async function runCode() {
-        var myEditor = document.getElementById("editor");
-        var myConsole = document.querySelector("#console");
-        await myConsole.process(myEditor.code);
-      }
 
-      function clearTerminal() {
-        var myConsole = document.querySelector("#console");
-        myConsole.terminal.clear();
-      }
+  <body>
+    <h1>CodeMirror with Python Syntax Highlighting</h1>
+    <!-- Textarea for CodeMirror -->
+    <textarea id="code-editor" name="code">
+# Write your Python code here
+print("Hello, CodeMirror!")
+    </textarea>
+
+    <script>
+      // Initialize CodeMirror on the textarea
+      var editor = CodeMirror.fromTextArea(
+        document.getElementById("code-editor"),
+        {
+          lineNumbers: true, // Show line numbers
+          mode: "python", // Set the language mode to Python
+          theme: "default", // Use the default theme (you can change this to other themes)
+        }
+      );
     </script>
   </body>
 </html>
