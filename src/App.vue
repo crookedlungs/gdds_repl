@@ -10,7 +10,7 @@ import { oneDark } from "@codemirror/theme-one-dark";
 
 const editorContainer = ref<HTMLDivElement | null>(null);
 
-onMounted(() => {
+onMounted(async () => {
   if (editorContainer.value) {
     let x = new EditorView({
       state: EditorState.create({
@@ -26,6 +26,10 @@ onMounted(() => {
       parent: editorContainer.value,
     });
   }
+
+  // Load Pyodide
+  // @ts-ignore
+  await loadPyodide();
 });
 </script>
 <template>
