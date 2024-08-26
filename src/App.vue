@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { basicSetup, EditorView } from "codemirror";
 import { keymap } from "@codemirror/view";
-import { defaultKeymap } from "@codemirror/commands";
+import { defaultKeymap, indentWithTab } from "@codemirror/commands";
 import { EditorState } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
 import { language } from "@codemirror/language";
@@ -15,7 +15,13 @@ onMounted(() => {
     let x = new EditorView({
       state: EditorState.create({
         doc: "Hello",
-        extensions: [basicSetup, python(), oneDark, keymap.of(defaultKeymap)],
+        extensions: [
+          basicSetup,
+          python(),
+          oneDark,
+          keymap.of(defaultKeymap),
+          keymap.of([indentWithTab]),
+        ],
       }),
       parent: editorContainer.value,
     });
