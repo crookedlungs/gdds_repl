@@ -14,11 +14,15 @@
     "@codemirror/state": "github:codemirror/state",
     "@codemirror/theme-one-dark": "^6.1.2",
     "@codemirror/view": "github:codemirror/view",
+    "@quasar/extras": "^1.16.12",
     "codemirror": "github:codemirror/basic-setup",
+    "quasar": "^2.16.9",
     "vue": "^3.4.37"
   },
   "devDependencies": {
+    "@quasar/vite-plugin": "^1.7.0",
     "@vitejs/plugin-vue": "^5.1.2",
+    "sass": "^1.77.8",
     "typescript": "^5.5.3",
     "vite": "^5.4.1",
     "vue-tsc": "^2.0.29"

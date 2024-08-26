@@ -56,7 +56,7 @@ const runCode = async () => {
 <template>
   <div style="height: 100%; width: 100%">
     <div ref="editorContainer" class="editor"></div>
-    <button @click="runCode"></button>
+    <q-card><button @click="runCode"></button></q-card>
   </div>
 </template>
 
