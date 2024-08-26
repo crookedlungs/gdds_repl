@@ -54,16 +54,29 @@ const runCode = async () => {
 </script>
 
 <template>
-  <div style="height: 100%; width: 100%">
-    <div ref="editorContainer" class="editor"></div>
-    <q-card><button @click="runCode"></button></q-card>
+  <div style="height: 100%; width: 100%; display: flex; flex-direction: row">
+    <q-card class="card">
+      <button @click="runCode"></button>
+      <div ref="editorContainer" class="editor"></div>
+    </q-card>
+    <q-card class="card">
+      <div style="width: 100%; height: 100%"></div>
+    </q-card>
   </div>
 </template>
 
 <style scoped>
 .editor {
-  height: 90%;
-  width: 45%;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
   border: 1px solid #ddd;
+  z-index: 5;
+}
+
+.card {
+  height: 90vh;
+  width: 45vw;
 }
 </style>
