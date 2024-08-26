@@ -19,7 +19,6 @@ onMounted(() => {
       }),
       parent: editorContainer.value,
     });
-    console.log(x.themeClasses);
   }
 });
 </script>
