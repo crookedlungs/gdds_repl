@@ -29,14 +29,15 @@ onMounted(() => {
 });
 </script>
 <template>
-  <p>hi</p>
-  <div ref="editorContainer" class="editor"></div>
+  <div style="height: 100%; width: 100%">
+    <div ref="editorContainer" class="editor"></div>
+  </div>
 </template>
 
 <style scoped>
 .editor {
-  height: 300px;
-  width: 300px;
+  height: 90%;
+  width: 45%;
   border: 1px solid #ddd;
 }
 </style>
