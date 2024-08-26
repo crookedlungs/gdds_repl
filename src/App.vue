@@ -5,7 +5,6 @@ import { keymap } from "@codemirror/view";
 import { defaultKeymap, indentWithTab } from "@codemirror/commands";
 import { EditorState } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
-import { language } from "@codemirror/language";
 import { oneDark } from "@codemirror/theme-one-dark";
 
 const editorContainer = ref<HTMLDivElement | null>(null);
