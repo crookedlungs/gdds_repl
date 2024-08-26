@@ -9,8 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vue": "^3.4.37",
-    "codemirror": "^6.0.1"
+    "@codemirror/basic-setup": "^0.20.0",
+    "@codemirror/lang-python": "github:codemirror/lang-python",
+    "@codemirror/state": "github:codemirror/state",
+    "@codemirror/theme-one-dark": "^6.1.2",
+    "@codemirror/view": "github:codemirror/view",
+    "codemirror": "github:codemirror/basic-setup",
+    "vue": "^3.4.37"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.2",
