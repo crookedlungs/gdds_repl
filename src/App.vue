@@ -4,7 +4,7 @@ import { basicSetup, EditorView } from "codemirror";
 import { keymap } from "@codemirror/view";
 import { defaultKeymap } from "@codemirror/commands";
 import { EditorState } from "@codemirror/state";
-import { python, pythonLanguage } from "@codemirror/lang-python";
+import { python } from "@codemirror/lang-python";
 import { language } from "@codemirror/language";
 import { oneDark } from "@codemirror/theme-one-dark";
 
@@ -15,7 +15,7 @@ onMounted(() => {
     let x = new EditorView({
       state: EditorState.create({
         doc: "Hello",
-        extensions: [basicSetup, pythonLanguage, oneDark],
+        extensions: [basicSetup, python(), oneDark, keymap.of(defaultKeymap)],
       }),
       parent: editorContainer.value,
     });
@@ -27,6 +27,7 @@ onMounted(() => {
   <p>hi</p>
   <div ref="editorContainer" class="editor"></div>
 </template>
+
 <style scoped>
 .editor {
   height: 300px;
