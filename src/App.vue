@@ -6,14 +6,25 @@ import { defaultKeymap, indentWithTab } from "@codemirror/commands";
 import { EditorState } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
 import { oneDark } from "@codemirror/theme-one-dark";
+import { Terminal } from "xterm";
 
 const editorContainer = ref<HTMLDivElement | null>(null);
+const terminalContainer = ref<HTMLDivElement | null>(null);
 const editor = ref<EditorView | null>(null);
-const output = ref<string>("");
+let terminal: Terminal;
 
 const pyodide: any = ref();
 
+const clearTerminal = () => {
+  if (terminal) {
+    terminal.clear();
+  }
+};
+
 onMounted(async () => {
+  // @ts-ignore
+  pyodide.value = await loadPyodide(); // Load Pyodide
+
   if (editorContainer.value) {
     editor.value = new EditorView({
       state: EditorState.create({
@@ -30,25 +41,57 @@ onMounted(async () => {
     });
   }
 
-  // Load Pyodide
-  // @ts-ignore
-  pyodide.value = await loadPyodide();
+  if (terminalContainer.value) {
+    console.warn("No terminal found. Initializing...");
+    // Initialize xterm.js terminal
+    terminal = new Terminal({
+      cursorBlink: true,
+      rows: 20,
+      cols: 80,
+    });
+    terminal.open(terminalContainer.value); // Append to parent container.
+
+    /* // Override input function to use xterm.js
+    pyodide.value.globals.set("input", async (prompt: string) => {
+      terminal.write(`\r\n${prompt}`);
+      const input = await new Promise<string>((resolve) => {
+        let userInput = "";
+        const handleInput = (data: string) => {
+          if (data.charCodeAt(0) === 13) {
+            // Enter key
+            terminal.write("\r\n");
+            // terminal.offData(handleInput);
+            resolve(userInput);
+          } else {
+            userInput += data;
+            terminal.write(data);
+          }
+        };
+        terminal.onData(handleInput);
+      });
+      return input;
+    }); */
+
+    /* // Redirect stdout to the terminal
+    pyodide.value.runPython(`
+      import sys
+      sys.stdout.write = lambda x: print(x, end='')
+      sys.stderr.write = lambda x: print(x, end='')
+    `); */
+  }
 });
 
 const runCode = async () => {
+  console.warn("Running code...");
   try {
-    if (editor.value) {
-      // Get the code from the editor
-      const code = editor.value.state.doc.toString(); // Run the code using Pyodide
+    const code = `print('Hello, Pyodide!')\nname = input('What is your name? ')\nprint('Hello, ' + name)`;
+    let result = await pyodide.value.runPythonAsync(code);
 
-      const result = await pyodide.value.runPythonAsync(code);
-      console.log(result.toString);
-      // Set the output
-      output.value = result.toString();
-    }
+    terminal.write(result, () => console.log("we wrote seomthing to term"));
   } catch (error) {
     // @ts-ignore
-    output.value = error.toString();
+    terminal.write(`\r\nError: ${error.toString()}\r\n`);
+    console.error(error);
   }
 };
 </script>
@@ -60,7 +103,9 @@ const runCode = async () => {
       <div ref="editorContainer" class="editor"></div>
     </q-card>
     <q-card class="card">
-      <div style="width: 100%; height: 100%"></div>
+      <div style="width: 100%; height: 100%">
+        <div id="terminal" ref="terminalContainer" class="terminal"></div>
+      </div>
     </q-card>
   </div>
 </template>
@@ -86,5 +131,6 @@ const runCode = async () => {
 .card {
   height: 90vh;
   width: 45vw;
+  margin: auto;
 }
 </style>

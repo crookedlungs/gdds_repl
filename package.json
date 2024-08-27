@@ -17,7 +17,8 @@
     "@quasar/extras": "^1.16.12",
     "codemirror": "github:codemirror/basic-setup",
     "quasar": "^2.16.9",
-    "vue": "^3.4.37"
+    "vue": "^3.4.37",
+    "xterm": "^5.3.0"
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.7.0",
