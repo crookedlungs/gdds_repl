@@ -8,6 +8,7 @@ import { python } from "@codemirror/lang-python";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { Terminal } from "xterm";
 import { getGddsLogo } from "./terminal";
+import { loadPyodide } from "pyodide";
 
 const editorContainer = ref<HTMLDivElement | null>(null);
 const terminalContainer = ref<HTMLDivElement | null>(null);
@@ -24,7 +25,11 @@ const clearTerminal = () => {
 
 onMounted(async () => {
   // @ts-ignore
-  pyodide.value = await loadPyodide(); // Load Pyodide
+  pyodide.value = await loadPyodide({
+    fullStdLib: false,
+    stdout: (msg) => console.log(`Pyodide: ${msg}`),
+  });
+  console.log("Loaded Pyodide");
 
   if (editorContainer.value) {
     editor.value = new EditorView({
@@ -74,7 +79,7 @@ onMounted(async () => {
       return input;
     }); */
 
-    /* // Redirect stdout to the terminal
+    /*     /// Redirect stdout to the terminal
     pyodide.value.runPython(`
       import sys
       sys.stdout.write = lambda x: print(x, end='')
@@ -83,13 +88,18 @@ onMounted(async () => {
   }
 });
 
+const pyodideParse = async (code: string) => {
+  await pyodide.value
+    .runPythonAsync(code)
+    .then((r: any) => console.log(r))
+    .catch((e: any) => console.error(e));
+};
+
 const runCode = async () => {
   console.warn("Running code...");
   try {
     const code = `print('Hello, Pyodide!')\nname = input('What is your name? ')\nprint('Hello, ' + name)`;
-    let result = await pyodide.value.runPythonAsync(code);
-
-    // terminal.write(result);
+    await pyodide.value.runPythonAsync(code);
   } catch (error) {
     // @ts-ignore
     terminal.write(`\r\nError: ${error.toString()}\r\n`);
