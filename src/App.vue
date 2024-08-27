@@ -16,20 +16,7 @@ let terminal: Terminal;
 
 const pyodide: any = ref();
 
-const clearTerminal = () => {
-  if (terminal) {
-    terminal.clear();
-  }
-};
-
 onMounted(async () => {
-  // @ts-ignore
-  pyodide.value = await loadPyodide({
-    fullStdLib: true,
-    stdout: (msg: any) => console.log(`Pyodide: ${msg}`),
-  });
-  console.log("Loaded Pyodide");
-
   if (editorContainer.value) {
     editor.value = new EditorView({
       state: EditorState.create({
@@ -56,61 +43,38 @@ onMounted(async () => {
     });
     terminal.open(terminalContainer.value); // Append to parent container.
     getGddsLogo(terminal);
-
-    /* // Override input function to use xterm.js
-    pyodide.value.globals.set("input", async (prompt: string) => {
-      terminal.write(`\r\n${prompt}`);
-      const input = await new Promise<string>((resolve) => {
-        let userInput = "";
-        const handleInput = (data: string) => {
-          if (data.charCodeAt(0) === 13) {
-            // Enter key
-            terminal.write("\r\n");
-            // terminal.offData(handleInput);
-            resolve(userInput);
-          } else {
-            userInput += data;
-            terminal.write(data);
-          }
-        };
-        terminal.onData(handleInput);
-      });
-      return input;
-    }); */
-
-    /*     /// Redirect stdout to the terminal
-    pyodide.value.runPython(`
-      import sys
-      sys.stdout.write = lambda x: print(x, end='')
-      sys.stderr.write = lambda x: print(x, end='')
-    `); */
   }
+
+  // @ts-ignore
+  pyodide.value = await loadPyodide({
+    fullStdLib: true,
+    stdout: (msg: any) => n(msg),
+  });
+
+  pyodide.value.runPython('x = input("hello")');
 });
 
-const pyodideParse = async (code: string) => {
-  await pyodide.value
-    .runPythonAsync(code)
-    .then((r: any) => console.log(r))
-    .catch((e: any) => console.error(e));
-};
+function n(a: any) {
+  console.warn(a);
+  terminal.writeln(a);
+}
 
-const runCode = async () => {
+async function runCode() {
   console.warn("Running code...");
-  try {
-    const code = `print('Hello, Pyodide!')\nname = input('What is your name? ')\nprint('Hello, ' + name)`;
-    await pyodide.value.runPythonAsync(code);
-  } catch (error) {
-    // @ts-ignore
-    terminal.write(`\r\nError: ${error.toString()}\r\n`);
-    console.error(error);
-  }
-};
+  // @ts-ignore
+  pyodide.value = await loadPyodide({
+    fullStdLib: true,
+    stdout: (msg: any) => n(msg),
+  });
+  const code = "3 + 6";
+  pyodide.value.runPython(code);
+}
 </script>
 
 <template>
   <div class="container">
     <q-card class="card">
-      <button @click="runCode"></button>
+      <button @click="runCode()"></button>
       <div ref="editorContainer" class="editor"></div>
     </q-card>
     <q-card class="card">

@@ -11,3 +11,9 @@ export function getGddsLogo(t: Terminal) {
   t.writeln("");
   t.writeln(`Welcome to the GDDS Terminal! Let's get coding!`);
 }
+
+export function clearTerminal(terminal: Terminal) {
+  if (terminal) {
+    terminal.clear();
+  }
+}
