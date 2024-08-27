@@ -8,7 +8,6 @@ import { python } from "@codemirror/lang-python";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { Terminal } from "xterm";
 import { getGddsLogo } from "./terminal";
-import { loadPyodide } from "pyodide";
 
 const editorContainer = ref<HTMLDivElement | null>(null);
 const terminalContainer = ref<HTMLDivElement | null>(null);
@@ -26,8 +25,8 @@ const clearTerminal = () => {
 onMounted(async () => {
   // @ts-ignore
   pyodide.value = await loadPyodide({
-    fullStdLib: false,
-    stdout: (msg) => console.log(`Pyodide: ${msg}`),
+    fullStdLib: true,
+    stdout: (msg: any) => console.log(`Pyodide: ${msg}`),
   });
   console.log("Loaded Pyodide");
 
