@@ -87,7 +87,7 @@ const runCode = async () => {
     const code = `print('Hello, Pyodide!')\nname = input('What is your name? ')\nprint('Hello, ' + name)`;
     let result = await pyodide.value.runPythonAsync(code);
 
-    terminal.write(result, () => console.log("we wrote seomthing to term"));
+    // terminal.write(result);
   } catch (error) {
     // @ts-ignore
     terminal.write(`\r\nError: ${error.toString()}\r\n`);
