@@ -54,7 +54,7 @@ const runCode = async () => {
 </script>
 
 <template>
-  <div style="height: 100%; width: 100%; display: flex; flex-direction: row">
+  <div class="container">
     <q-card class="card">
       <button @click="runCode"></button>
       <div ref="editorContainer" class="editor"></div>
@@ -66,6 +66,14 @@ const runCode = async () => {
 </template>
 
 <style scoped>
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+}
+
 .editor {
   height: 100%;
   width: 100%;
