@@ -7,6 +7,7 @@ import { EditorState } from "@codemirror/state";
 import { python } from "@codemirror/lang-python";
 import { oneDark } from "@codemirror/theme-one-dark";
 import { Terminal } from "xterm";
+import { getGddsLogo } from "./terminal";
 
 const editorContainer = ref<HTMLDivElement | null>(null);
 const terminalContainer = ref<HTMLDivElement | null>(null);
@@ -46,10 +47,11 @@ onMounted(async () => {
     // Initialize xterm.js terminal
     terminal = new Terminal({
       cursorBlink: true,
-      rows: 20,
+      rows: 40,
       cols: 80,
     });
     terminal.open(terminalContainer.value); // Append to parent container.
+    getGddsLogo(terminal);
 
     /* // Override input function to use xterm.js
     pyodide.value.globals.set("input", async (prompt: string) => {
